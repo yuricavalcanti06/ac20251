@@ -2,13 +2,17 @@ package br.edu.cs.poo.ac.seguro.daos;
 
 import br.edu.cesarschool.next.oo.persistenciaobjetos.CadastroObjetos;
 import br.edu.cs.poo.ac.seguro.entidades.SeguradoPessoa;
+import java.io.Serializable;
 
-/*
- * As classes Segurado e SeguradoPessoa devem implementar Serializable.
- */
 public class SeguradoPessoaDAO extends DAOGenerico {
+
     public SeguradoPessoaDAO() {
+        super();
         cadastro = new CadastroObjetos(SeguradoPessoa.class);
+    }
+
+    private String obterChave(SeguradoPessoa segurado) {
+        return segurado.getCpf();
     }
 
     public SeguradoPessoa buscar(String cpf) {
@@ -16,21 +20,25 @@ public class SeguradoPessoaDAO extends DAOGenerico {
     }
 
     public boolean incluir(SeguradoPessoa segurado) {
-        if (buscar(segurado.getCpf()) != null) {
+        String chave = obterChave(segurado);
+        if (buscar(chave) != null) {
             return false;
         } else {
-            cadastro.incluir(segurado, segurado.getCpf());
+            cadastro.incluir(segurado, chave);
             return true;
         }
     }
+
     public boolean alterar(SeguradoPessoa segurado) {
-        if (buscar(segurado.getCpf()) == null) {
+        String chave = obterChave(segurado);
+        if (buscar(chave) == null) {
             return false;
         } else {
-            cadastro.alterar(segurado, segurado.getCpf());
+            cadastro.alterar(segurado, chave);
             return true;
         }
     }
+
     public boolean excluir(String cpf) {
         if (buscar(cpf) == null) {
             return false;
@@ -39,5 +47,4 @@ public class SeguradoPessoaDAO extends DAOGenerico {
             return true;
         }
     }
-
 }

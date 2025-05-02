@@ -2,9 +2,10 @@ package br.edu.cs.poo.ac.seguro.entidades;
 
 import java.math.BigDecimal;
 import java.time.LocalDate;
+import java.io.Serializable;
 
-public class SeguradoEmpresa extends Segurado {
-
+public class SeguradoEmpresa extends Segurado implements Serializable {
+    private static final long serialVersionUID = 1L;
     private String cnpj;
     private double faturamento;
     private boolean ehLocadoraDeVeiculos;
@@ -16,35 +17,12 @@ public class SeguradoEmpresa extends Segurado {
         this.ehLocadoraDeVeiculos = ehLocadoraDeVeiculos;
     }
 
-    public String getCnpj() {
-        return cnpj;
-    }
-
-    public void setCnpj(String cnpj) {
-        this.cnpj = cnpj;
-    }
-
-    public double getFaturamento() {
-        return faturamento;
-    }
-
-    public void setFaturamento(double faturamento) {
-        this.faturamento = faturamento;
-    }
-
-    public boolean isEhLocadoraDeVeiculos() {
-        return ehLocadoraDeVeiculos;
-    }
-
-    public void setEhLocadoraDeVeiculos(boolean ehLocadoraDeVeiculos) {
-        this.ehLocadoraDeVeiculos = ehLocadoraDeVeiculos;
-    }
-
-    public LocalDate getDataAbertura() {
-        return this.getDataCriacao();
-    }
-
-    public void setDataAbertura(LocalDate dataAbertura) {
-        this.setDataCriacao(dataAbertura);
-    }
+    public String getCnpj() { return cnpj; }
+    public void setCnpj(String cnpj) { this.cnpj = cnpj; }
+    public double getFaturamento() { return faturamento; }
+    public void setFaturamento(double faturamento) { this.faturamento = faturamento; }
+    public boolean isEhLocadoraDeVeiculos() { return ehLocadoraDeVeiculos; }
+    public void setEhLocadoraDeVeiculos(boolean ehLocadoraDeVeiculos) { this.ehLocadoraDeVeiculos = ehLocadoraDeVeiculos; }
+    public LocalDate getDataAbertura() { return super.getDataCriacao(); }
+    public void setDataAbertura(LocalDate dataAbertura) { super.setDataCriacao(dataAbertura); }
 }
