@@ -1,5 +1,6 @@
 package br.edu.cs.poo.ac.seguro.testes;
 
+
 import org.junit.jupiter.api.Test;
 import static org.junit.jupiter.api.Assertions.*;
 import java.math.BigDecimal;
