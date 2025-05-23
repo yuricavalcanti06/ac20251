@@ -10,7 +10,7 @@ import lombok.NoArgsConstructor;
 @Getter
 @Setter
 @NoArgsConstructor
-public class Apolice implements Serializable {
+public class Apolice implements Serializable, Registro {
     private static final long serialVersionUID = 1L;
     private String numero;
     private Veiculo veiculo;
@@ -26,5 +26,10 @@ public class Apolice implements Serializable {
         this.valorPremio = valorPremio;
         this.valorMaximoSegurado = valorMaximoSegurado;
         this.dataInicioVigencia = dataInicioVigencia;
+    }
+
+    @Override
+    public String getIdUnico() {
+        return this.numero;
     }
 }

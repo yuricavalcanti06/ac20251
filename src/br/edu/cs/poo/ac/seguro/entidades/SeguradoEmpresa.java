@@ -23,6 +23,17 @@ public class SeguradoEmpresa extends Segurado implements Serializable {
     public void setFaturamento(double faturamento) { this.faturamento = faturamento; }
     public boolean isEhLocadoraDeVeiculos() { return ehLocadoraDeVeiculos; }
     public void setEhLocadoraDeVeiculos(boolean ehLocadoraDeVeiculos) { this.ehLocadoraDeVeiculos = ehLocadoraDeVeiculos; }
+
     public LocalDate getDataAbertura() { return super.getDataCriacao(); }
     public void setDataAbertura(LocalDate dataAbertura) { super.setDataCriacao(dataAbertura); }
+
+    @Override
+    public boolean isEmpresa() {
+        return true;
+    }
+
+    @Override
+    public String getIdUnico() {
+        return this.cnpj;
+    }
 }

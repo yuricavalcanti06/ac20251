@@ -12,7 +12,7 @@ import lombok.NoArgsConstructor;
 @Setter
 @AllArgsConstructor // Mantido AllArgsConstructor, mas um construtor customizado foi adicionado
 @NoArgsConstructor
-public class Sinistro implements Serializable {
+public class Sinistro implements Serializable, Registro {
     private static final long serialVersionUID = 1L;
     private String numero;
     private Veiculo veiculo;
@@ -29,5 +29,10 @@ public class Sinistro implements Serializable {
         this.usuarioRegistro = usuarioRegistro;
         this.valorSinistro = valorSinistro;
         this.tipo = tipo;
+    }
+
+    @Override
+    public String getIdUnico() {
+        return this.numero;
     }
 }

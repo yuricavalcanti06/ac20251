@@ -12,14 +12,18 @@ import lombok.NoArgsConstructor;
 @AllArgsConstructor
 @NoArgsConstructor
 @EqualsAndHashCode(onlyExplicitlyIncluded = true)
-public class Veiculo implements Serializable {
+public class Veiculo implements Serializable, Registro {
     private static final long serialVersionUID = 1L;
 
     @EqualsAndHashCode.Include
     private String placa;
 
     private int ano;
-    private SeguradoEmpresa proprietarioEmpresa;
-    private SeguradoPessoa proprietarioPessoa;
+    private Segurado proprietario;
     private CategoriaVeiculo categoria;
+
+    @Override
+    public String getIdUnico() {
+        return this.placa;
+    }
 }

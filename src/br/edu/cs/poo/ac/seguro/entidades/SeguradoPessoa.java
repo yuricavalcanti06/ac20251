@@ -21,4 +21,14 @@ public class SeguradoPessoa extends Segurado implements Serializable {
     public void setRenda(double renda) { this.renda = renda; }
     public LocalDate getDataNascimento() { return super.getDataCriacao(); }
     public void setDataNascimento(LocalDate dataNascimento) { super.setDataCriacao(dataNascimento); }
+
+    @Override
+    public boolean isEmpresa() {
+        return false;
+    }
+
+    @Override
+    public String getIdUnico() {
+        return this.cpf;
+    }
 }
