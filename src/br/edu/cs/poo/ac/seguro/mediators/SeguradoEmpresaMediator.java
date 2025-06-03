@@ -27,7 +27,7 @@ public class SeguradoEmpresaMediator {
             return "CNPJ deve ter 14 caracteres";
         }
         if (!ValidadorCpfCnpj.ehCnpjValido(cnpj)) {
-            return "CNPJ com dígito inválido";
+            return "CNPJ com d�gito inv�lido";
         }
         return null;
     }
@@ -51,7 +51,7 @@ public class SeguradoEmpresaMediator {
 
         msg = seguradoMediator.validarDataCriacao(seg.getDataAbertura());
         if (msg != null) {
-            if (msg.contains("Data da criação")) {
+            if (msg.equals("Data da cria��o deve ser informada")) {
                 return "Data da abertura deve ser informada";
             }
             return msg;
@@ -77,7 +77,7 @@ public class SeguradoEmpresaMediator {
         }
 
         if (seguradoEmpresaDAO.buscar(seg.getCnpj()) != null) {
-            return "CNPJ do segurado empresa já existente";
+            return "CNPJ do segurado empresa j� existente";
         }
 
         boolean incluiu = seguradoEmpresaDAO.incluir(seg);
@@ -94,7 +94,7 @@ public class SeguradoEmpresaMediator {
         }
 
         if (seguradoEmpresaDAO.buscar(seg.getCnpj()) == null) {
-            return "CNPJ do segurado empresa não existente";
+            return "CNPJ do segurado empresa n�o existente";
         }
 
         boolean alterou = seguradoEmpresaDAO.alterar(seg);
@@ -105,19 +105,18 @@ public class SeguradoEmpresaMediator {
     }
 
     public String excluirSeguradoEmpresa(String cnpj) {
-        boolean excluiu = seguradoEmpresaDAO.excluir(cnpj);
+        String msgValidacaoCnpj = validarCnpj(cnpj);
+        if (msgValidacaoCnpj != null && !msgValidacaoCnpj.equals("CNPJ com d�gito inv�lido")) {
+        }
 
+
+        if (seguradoEmpresaDAO.buscar(cnpj) == null) {
+            return "CNPJ do segurado empresa n�o existente";
+        }
+
+        boolean excluiu = seguradoEmpresaDAO.excluir(cnpj);
         if (!excluiu) {
-            String msgValidacao = validarCnpj(cnpj);
-            if (msgValidacao != null) {
-                if (seguradoEmpresaDAO.buscar(cnpj) == null) {
-                    return "CNPJ do segurado empresa não existente";
-                } else {
-                    return "Erro ao excluir segurado empresa";
-                }
-            } else {
-                return "CNPJ do segurado empresa não existente";
-            }
+            return "Erro ao excluir segurado empresa";
         }
         return null;
     }

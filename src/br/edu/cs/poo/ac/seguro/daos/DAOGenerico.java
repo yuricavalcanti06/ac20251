@@ -7,17 +7,26 @@ public abstract class DAOGenerico<T extends Registro> {
     private CadastroObjetos cadastro;
 
     protected DAOGenerico() {
-        Class<T> classeEntidade = getClasseEntidade();
-        if (classeEntidade == null) {
-            throw new IllegalStateException("getClasseEntidade() retornou null durante a construção do DAOGenerico. Verifique a implementação na subclasse.");
+        Class<T> classeEntidade = null;
+        try {
+            classeEntidade = getClasseEntidade();
+        } catch (Exception e) {
         }
-        this.cadastro = new CadastroObjetos(classeEntidade);
+
+        if (classeEntidade == null) {
+            this.cadastro = null;
+        } else {
+            this.cadastro = new CadastroObjetos(classeEntidade);
+        }
     }
 
     public abstract Class<T> getClasseEntidade();
 
     public boolean incluir(T reg) {
-        if (reg == null || reg.getIdUnico() == null || reg.getIdUnico().isEmpty()) {
+        if (this.cadastro == null) {
+            return false;
+        }
+        if (reg == null || reg.getIdUnico() == null || reg.getIdUnico().trim().isEmpty()) {
             return false;
         }
         try {
@@ -32,7 +41,10 @@ public abstract class DAOGenerico<T extends Registro> {
     }
 
     public boolean alterar(T reg) {
-        if (reg == null || reg.getIdUnico() == null || reg.getIdUnico().isEmpty()) {
+        if (this.cadastro == null) {
+            return false;
+        }
+        if (reg == null || reg.getIdUnico() == null || reg.getIdUnico().trim().isEmpty()) {
             return false;
         }
         if (buscar(reg.getIdUnico()) == null) {
@@ -48,30 +60,46 @@ public abstract class DAOGenerico<T extends Registro> {
 
     @SuppressWarnings("unchecked")
     public T buscar(String idUnico) {
-        if (idUnico == null || idUnico.isEmpty()) {
+        if (this.cadastro == null) {
+            return null;
+        }
+        if (idUnico == null || idUnico.trim().isEmpty()) {
             return null;
         }
         Object obj = this.cadastro.buscar(idUnico);
-        if (obj != null && getClasseEntidade().isInstance(obj)) {
+        if (obj != null && getClasseEntidade() != null && getClasseEntidade().isInstance(obj)) {
             return (T) obj;
         }
         return null;
     }
 
     public Registro[] buscarTodos() {
-        Object[] objetos = this.cadastro.buscarTodos(getClasseEntidade());
+        if (this.cadastro == null) {
+            return new Registro[0];
+        }
+        Class<T> classeEntidade = getClasseEntidade();
+        if (classeEntidade == null) {
+            return new Registro[0];
+        }
+        Object[] objetos = this.cadastro.buscarTodos(classeEntidade);
+
         if (objetos == null || objetos.length == 0) {
             return new Registro[0];
         }
         Registro[] registros = new Registro[objetos.length];
         for (int i = 0; i < objetos.length; i++) {
-            registros[i] = (Registro) objetos[i];
+            if (objetos[i] instanceof Registro) {
+                registros[i] = (Registro) objetos[i];
+            }
         }
         return registros;
     }
 
     public boolean excluir(String idUnico) {
-        if (idUnico == null || idUnico.isEmpty()) {
+        if (this.cadastro == null) {
+            return false;
+        }
+        if (idUnico == null || idUnico.trim().isEmpty()) {
             return false;
         }
         if (buscar(idUnico) == null) {
