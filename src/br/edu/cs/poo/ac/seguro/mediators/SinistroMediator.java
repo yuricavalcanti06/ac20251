@@ -47,11 +47,11 @@ public class SinistroMediator {
         }
 
         if (dados.getPlaca() == null || dados.getPlaca().trim().isEmpty()) {
-            errosValidacao.add("Placa do Ve�culo deve ser informada");
+            errosValidacao.add("Placa do Veiculo deve ser informada");
         }
 
         if (dados.getUsuarioRegistro() == null || dados.getUsuarioRegistro().trim().isEmpty()) {
-            errosValidacao.add("Usu�rio do registro de sinistro deve ser informado");
+            errosValidacao.add("Usuario do registro de sinistro deve ser informado");
         }
 
         if (dados.getValorSinistro() <= 0) {
@@ -62,7 +62,7 @@ public class SinistroMediator {
         if (dados.getPlaca() != null && !dados.getPlaca().trim().isEmpty()) {
             veiculoSinistrado = daoVeiculo.buscar(dados.getPlaca());
             if (veiculoSinistrado == null) {
-                errosValidacao.add("Ve�culo n�o cadastrado");
+                errosValidacao.add("Veiculo não cadastrado");
             }
         }
 
@@ -76,7 +76,7 @@ public class SinistroMediator {
             }
         }
         if (!tipoSinistroValido) {
-            errosValidacao.add("C�digo do tipo de sinistro inv�lido");
+            errosValidacao.add("Codigo do tipo de sinistro invalido");
         }
 
         Apolice apoliceCobertura = null;
@@ -96,12 +96,12 @@ public class SinistroMediator {
                 }
             }
             if (apoliceCobertura == null) {
-                errosValidacao.add("N�o existe ap�lice vigente para o ve�culo");
+                errosValidacao.add("Nao existe apolice vigente para o veiculo");
             } else {
                 if (apoliceCobertura.getValorMaximoSegurado() != null) {
                     BigDecimal valorSinistroBd = new BigDecimal(dados.getValorSinistro());
                     if (valorSinistroBd.compareTo(apoliceCobertura.getValorMaximoSegurado()) > 0) {
-                        errosValidacao.add("Valor do sinistro n�o pode ultrapassar o valor m�ximo segurado constante na ap�lice");
+                        errosValidacao.add("Valor do sinistro nao pode ultrapassar o valor maximo segurado constante na apolice");
                     }
                 }
             }
@@ -117,7 +117,7 @@ public class SinistroMediator {
 
         if (apoliceCobertura == null) {
             ExcecaoValidacaoDados ex = new ExcecaoValidacaoDados();
-            ex.adicionarMensagem("Erro interno: Ap�lice de cobertura n�o foi determinada apesar de passar nas valida��es.");
+            ex.adicionarMensagem("Erro interno: Apolice de cobertura não foi determinada apesar de passar nas validações.");
             throw ex;
         }
 
@@ -161,9 +161,9 @@ public class SinistroMediator {
         if (!incluido) {
             ExcecaoValidacaoDados ex = new ExcecaoValidacaoDados();
             if (daoSinistro.buscar(numeroSinistro) != null) {
-                ex.adicionarMensagem("Falha ao incluir o sinistro. O sinistro com n�mero " + numeroSinistro + " j� existe.");
+                ex.adicionarMensagem("Falha ao incluir o sinistro. O sinistro com numero " + numeroSinistro + " ja existe.");
             } else {
-                ex.adicionarMensagem("Falha ao incluir o sinistro no sistema devido a um erro interno ou valida��o do DAO.");
+                ex.adicionarMensagem("Falha ao incluir o sinistro no sistema devido a um erro interno ou validacao do DAO.");
             }
             throw ex;
         }

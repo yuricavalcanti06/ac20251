@@ -25,7 +25,7 @@ import br.edu.cs.poo.ac.seguro.mediators.SinistroMediator;
 public class TesteSinistroMediator extends TesteMediator {
 
 	private SinistroMediator sinMed = SinistroMediator.getInstancia();
-	private CadastroObjetos cadPessoa = new CadastroObjetos(SeguradoPessoa.class);	
+	private CadastroObjetos cadPessoa = new CadastroObjetos(SeguradoPessoa.class);
 	private CadastroObjetos cadVeiculo = new CadastroObjetos(Veiculo.class);
 	private CadastroObjetos cadSinistro = new CadastroObjetos(Sinistro.class);
 	private CadastroObjetos cadApolice = new CadastroObjetos(Apolice.class);
@@ -41,7 +41,7 @@ public class TesteSinistroMediator extends TesteMediator {
 		FileUtils.limparDiretorio("." + sep + SeguradoEmpresa.class.getSimpleName());
 		FileUtils.limparDiretorio("." + sep + SeguradoPessoa.class.getSimpleName());
 		FileUtils.limparDiretorio("." + sep + Apolice.class.getSimpleName());
-	}	
+	}
 	@Test
 	public void teste01() {
 		try {
@@ -51,7 +51,7 @@ public class TesteSinistroMediator extends TesteMediator {
 			List<String> msgs = e.getMensagens();
 			Assertions.assertNotNull(msgs);
 			Assertions.assertEquals(1, msgs.size());
-			Assertions.assertEquals("Dados do sinistro devem ser informados", msgs.get(0));			
+			Assertions.assertEquals("Dados do sinistro devem ser informados", msgs.get(0));
 		}
 	}
 	@Test
@@ -64,11 +64,11 @@ public class TesteSinistroMediator extends TesteMediator {
 			List<String> msgs = e.getMensagens();
 			Assertions.assertNotNull(msgs);
 			Assertions.assertEquals(5, msgs.size());
-			Assertions.assertEquals("Data/hora do sinistro deve ser informada", msgs.get(0));			
-			Assertions.assertEquals("Placa do Veículo deve ser informada", msgs.get(1));
-			Assertions.assertEquals("Usuário do registro de sinistro deve ser informado", msgs.get(2));
+			Assertions.assertEquals("Data/hora do sinistro deve ser informada", msgs.get(0));
+			Assertions.assertEquals("Placa do Veiculo deve ser informada", msgs.get(1));
+			Assertions.assertEquals("Usuario do registro de sinistro deve ser informado", msgs.get(2));
 			Assertions.assertEquals("Valor do sinistro deve ser maior que zero", msgs.get(3));
-			Assertions.assertEquals("Código do tipo de sinistro inválido", msgs.get(4));
+			Assertions.assertEquals("Codigo do tipo de sinistro invalido", msgs.get(4));
 		}
 		try {
 			DadosSinistro dados = new DadosSinistro(null, null, null, 0, 6);
@@ -78,11 +78,11 @@ public class TesteSinistroMediator extends TesteMediator {
 			List<String> msgs = e.getMensagens();
 			Assertions.assertNotNull(msgs);
 			Assertions.assertEquals(5, msgs.size());
-			Assertions.assertEquals("Data/hora do sinistro deve ser informada", msgs.get(0));			
-			Assertions.assertEquals("Placa do Veículo deve ser informada", msgs.get(1));
-			Assertions.assertEquals("Usuário do registro de sinistro deve ser informado", msgs.get(2));
+			Assertions.assertEquals("Data/hora do sinistro deve ser informada", msgs.get(0));
+			Assertions.assertEquals("Placa do Veiculo deve ser informada", msgs.get(1));
+			Assertions.assertEquals("Usuario do registro de sinistro deve ser informado", msgs.get(2));
 			Assertions.assertEquals("Valor do sinistro deve ser maior que zero", msgs.get(3));
-			Assertions.assertEquals("Código do tipo de sinistro inválido", msgs.get(4));
+			Assertions.assertEquals("Codigo do tipo de sinistro invalido", msgs.get(4));
 		}
 	}
 	@Test
@@ -95,11 +95,11 @@ public class TesteSinistroMediator extends TesteMediator {
 			List<String> msgs = e.getMensagens();
 			Assertions.assertNotNull(msgs);
 			Assertions.assertEquals(2, msgs.size());
-			Assertions.assertEquals("Data/hora do sinistro deve ser menor que a data/hora atual", msgs.get(0));			
-			Assertions.assertEquals("Veículo não cadastrado", msgs.get(1));
+			Assertions.assertEquals("Data/hora do sinistro deve ser menor que a data/hora atual", msgs.get(0));
+			Assertions.assertEquals("Veiculo nÃ£o cadastrado", msgs.get(1));
 		}
 	}
-	
+
 	@Test
 	public void teste04() {
 		try {
@@ -116,7 +116,7 @@ public class TesteSinistroMediator extends TesteMediator {
 			List<String> msgs = e.getMensagens();
 			Assertions.assertNotNull(msgs);
 			Assertions.assertEquals(1, msgs.size());
-			Assertions.assertEquals("Data/hora do sinistro deve ser informada", msgs.get(0));			
+			Assertions.assertEquals("Data/hora do sinistro deve ser informada", msgs.get(0));
 		}
 	}
 	@Test
@@ -135,9 +135,9 @@ public class TesteSinistroMediator extends TesteMediator {
 			List<String> msgs = e.getMensagens();
 			Assertions.assertNotNull(msgs);
 			Assertions.assertEquals(1, msgs.size());
-			Assertions.assertEquals("Não existe apólice vigente para o veículo", msgs.get(0));			
+			Assertions.assertEquals("Nao existe apolice vigente para o veiculo", msgs.get(0));
 		}
-	}	
+	}
 	@Test
 	public void teste06() {
 		try {
@@ -150,16 +150,16 @@ public class TesteSinistroMediator extends TesteMediator {
 			cadVeiculo.incluir(vei, placa);
 			Apolice ap = new Apolice(numero, vei, null, null, null, LocalDate.now().minusMonths(13));
 			cadApolice.incluir(ap, numero);
-			DadosSinistro dados = new DadosSinistro(placa, LocalDateTime.now().minusMinutes(10), "ddd.xxx", 100.0, 1);			
+			DadosSinistro dados = new DadosSinistro(placa, LocalDateTime.now().minusMinutes(10), "ddd.xxx", 100.0, 1);
 			sinMed.incluirSinistro(dados, LocalDateTime.now());
 			Assertions.fail();
 		} catch (ExcecaoValidacaoDados e) {
 			List<String> msgs = e.getMensagens();
 			Assertions.assertNotNull(msgs);
 			Assertions.assertEquals(1, msgs.size());
-			Assertions.assertEquals("Não existe apólice vigente para o veículo", msgs.get(0));			
+			Assertions.assertEquals("Nao existe apolice vigente para o veiculo", msgs.get(0));
 		}
-	}	
+	}
 	@Test
 	public void teste07() {
 		try {
@@ -175,14 +175,14 @@ public class TesteSinistroMediator extends TesteMediator {
 			cadVeiculo.incluir(vei1, placa1);
 			Apolice ap = new Apolice(numero, vei, null, null, null, LocalDate.now().minusMonths(2));
 			cadApolice.incluir(ap, numero);
-			DadosSinistro dados = new DadosSinistro(placa1, LocalDateTime.now().minusMinutes(10), "ddd.xxx", 100.0, 1);			
+			DadosSinistro dados = new DadosSinistro(placa1, LocalDateTime.now().minusMinutes(10), "ddd.xxx", 100.0, 1);
 			sinMed.incluirSinistro(dados, LocalDateTime.now());
 			Assertions.fail();
 		} catch (ExcecaoValidacaoDados e) {
 			List<String> msgs = e.getMensagens();
 			Assertions.assertNotNull(msgs);
 			Assertions.assertEquals(1, msgs.size());
-			Assertions.assertEquals("Não existe apólice vigente para o veículo", msgs.get(0));			
+			Assertions.assertEquals("Nao existe apolice vigente para o veiculo", msgs.get(0));
 		}
 	}
 	@Test
@@ -203,14 +203,14 @@ public class TesteSinistroMediator extends TesteMediator {
 			Apolice ap1 = new Apolice(numero1, vei1, null, null, new BigDecimal("61000.00"), LocalDate.now().minusMonths(3));
 			cadApolice.incluir(ap, numero);
 			cadApolice.incluir(ap1, numero1);
-			DadosSinistro dados = new DadosSinistro(placa, LocalDateTime.now().minusMinutes(10), "ddd.xxx", 60000.00, 1);			
+			DadosSinistro dados = new DadosSinistro(placa, LocalDateTime.now().minusMinutes(10), "ddd.xxx", 60000.00, 1);
 			sinMed.incluirSinistro(dados, LocalDateTime.now());
 			Assertions.fail();
 		} catch (ExcecaoValidacaoDados e) {
 			List<String> msgs = e.getMensagens();
 			Assertions.assertNotNull(msgs);
 			Assertions.assertEquals(1, msgs.size());
-			Assertions.assertEquals("Valor do sinistro não pode ultrapassar o valor máximo segurado constante na apólice", msgs.get(0));			
+			Assertions.assertEquals("Valor do sinistro nao pode ultrapassar o valor maximo segurado constante na apolice", msgs.get(0));
 		}
 	}
 	@Test
@@ -236,7 +236,7 @@ public class TesteSinistroMediator extends TesteMediator {
 			Apolice ap1 = new Apolice(numero1, vei1, null, null, new BigDecimal("61000.00"), LocalDate.now().minusMonths(3));
 			cadApolice.incluir(ap, numero);
 			cadApolice.incluir(ap1, numero1);
-			DadosSinistro dados = new DadosSinistro(placa, dhSinistro, usuario, 58000.00, 1);			
+			DadosSinistro dados = new DadosSinistro(placa, dhSinistro, usuario, 58000.00, 1);
 			String numeroSin = sinMed.incluirSinistro(dados, now);
 			Assertions.assertEquals(numeroEsp, numeroSin);
 			Sinistro sinRef = new Sinistro(numeroEsp, vei, dhSinistro, now, usuario, new BigDecimal(valorSinistro), TipoSinistro.COLISAO);
@@ -277,7 +277,7 @@ public class TesteSinistroMediator extends TesteMediator {
 			sinAnt.setNumeroApolice(numero);
 			sinAnt.setSequencial(1);
 			cadSinistro.incluir(sinAnt, numeroAnt);
-			DadosSinistro dados = new DadosSinistro(placa, dhSinistro, usuario, 58000.00, 1);			
+			DadosSinistro dados = new DadosSinistro(placa, dhSinistro, usuario, 58000.00, 1);
 			String numeroSin = sinMed.incluirSinistro(dados, now);
 			Assertions.assertEquals(numeroEsp, numeroSin);
 			Sinistro sinRef = new Sinistro(numeroEsp, vei, dhSinistro, now, usuario, new BigDecimal(valorSinistro), TipoSinistro.COLISAO);
